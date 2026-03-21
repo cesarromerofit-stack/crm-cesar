@@ -1,14 +1,26 @@
 from flask import Flask, render_template, request, redirect
-
+import sqlite3
+clientes =[]
 app = Flask(__name__)
-
-clientes = []
-
 @app.route('/')
 @app.route('/clientes')
 def ver_clientes():
+    zona_filtro = request.args.get('zona')
+
+    conn = sqlite3.connect("clientes.db")
+    cursor = conn.cursor()
+
+    if zona_filtro:
+        cursor.execute("SELECT * FROM clientes WHERE zona = ?", (zona_filtro,))
+    else:
+        cursor.execute("SELECT * FROM clientes")
+
+    clientes = cursor.fetchall()
+
     total_clientes = len(clientes)
-    total_presupuesto = sum(int(c[2]) for c in clientes) if clientes else 0
+    total_presupuesto = sum(c[3] for c in clientes) if clientes else 0
+
+    conn.close()
 
     return render_template(
         'clientes.html',
@@ -65,9 +77,12 @@ def whatsapp(indice):
     zona = cliente[3]
     telefono = cliente[4]
 
-    mensaje = f"Hola {nombre}, tengo opciones en {zona} dentro de tu presupuesto de ${presupuesto}. ¿Te gustaría más información?"
+    mensaje = f"Hola {nombre}, tengo opciones en {zona} dentro de tu presupuesto de ${presupuesto}. ¿Te gustaría verlas?"
 
-    url = f"https://wa.me/{telefono}?text={mensaje}"
+    import urllib.parse
+    mensaje_codificado = urllib.parse.quote(mensaje)
+
+    url = f"https://wa.me/{telefono}?text={mensaje_codificado}"
 
     return redirect(url)
 
