@@ -2,6 +2,24 @@ from flask import Flask, render_template, request, redirect
 import sqlite3
 clientes =[]
 app = Flask(__name__)
+
+import sqlite3
+
+conexion = sqlite3.connect("clientes.db", check_same_thread=False)
+cursor = conexion.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT,
+    proyecto TEXT,
+    presupuesto TEXT,
+    zona TEXT,
+    telefono TEXT
+)
+""")
+
+conexion.commit()
 @app.route('/')
 @app.route('/clientes')
 def ver_clientes():
@@ -88,3 +106,5 @@ def whatsapp(indice):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+    
