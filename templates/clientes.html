@@ -7,15 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body style="background:#f5f7fb;">
-     <h1 style="color:red;">🔥 FUNCIONA ESTE ARCHIVO 🔥</h1>
+<body class="bg-light">
 
     <div class="d-flex">
 
         <!-- SIDEBAR -->
-        <div class="bg-dark text-white p-3" style="width:200px; min-height:100vh;">
-            <h4>CRM Pro</h4>
-            <hr>
+        <div class="bg-dark text-white p-3" style="width:220px; min-height:100vh;">
+            <h4 class="mb-4">CRM Pro</h4>
             <p>Dashboard</p>
             <p><b>Clientes</b></p>
             <p>Ventas</p>
@@ -25,93 +23,78 @@
         <!-- CONTENIDO -->
         <div class="flex-grow-1 p-4">
 
-            <h3>Panel de Clientes</h3>
-            <p>Gestiona y convierte tus leads en ventas</p>
+            <h2 class="mb-1">Panel de Clientes</h2>
+            <p class="text-muted">Gestiona y convierte tus leads en ventas</p>
 
             <!-- BUSCADOR -->
             <form method="GET" action="/clientes" class="mb-3">
-                <input type="text" name="zona" class="form-control" placeholder="Buscar por zona..."
-                    value="{{ zona_filtro or '' }}">
+                <input type="text" name="zona" placeholder="Buscar por zona..." class="form-control">
             </form>
 
             <!-- FORMULARIO -->
-            <form action="/guardar" method="POST" class="mb-4 bg-white p-3 rounded shadow-sm">
+            <form action="/guardar" method="POST" class="bg-white p-4 rounded-4 shadow-sm mb-4">
 
-                <div class="mb-2">
-                    <label>Nombre</label>
-                    <input class="form-control" name="nombre" placeholder="Ej: Juan Pérez">
-                </div>
+                <input type="text" name="nombre" placeholder="Nombre del cliente" class="form-control mb-3">
 
-                <div class="mb-2">
-                    <label>Proyecto</label>
-                    <input class="form-control" name="proyecto" placeholder="Ej: Villa, Inversión">
-                </div>
+                <input type="text" name="proyecto" placeholder="Proyecto (Villa, inversión...)"
+                    class="form-control mb-3">
 
-                <div class="mb-2">
-                    <label>Presupuesto</label>
-                    <input class="form-control" name="presupuesto" placeholder="Ej: 150000">
-                </div>
+                <input type="number" name="presupuesto" placeholder="Presupuesto" class="form-control mb-3">
 
-                <div class="mb-2">
-                    <label>Zona</label>
-                    <input class="form-control" name="zona" placeholder="Ej: Punta Cana">
-                </div>
+                <input type="text" name="zona" placeholder="Zona (Punta Cana, etc)" class="form-control mb-3">
 
-                <div class="mb-3">
-                    <label>Teléfono</label>
-                    <input class="form-control" name="telefono" placeholder="Ej: 8091234567">
-                </div>
+                <input type="text" name="telefono" placeholder="Teléfono" class="form-control mb-3">
 
-                <button type="submit" class="btn btn-primary w-100">
-                    + Guardar Cliente
-                </button>
+                <button class="btn btn-primary w-100 rounded-3">Guardar Cliente</button>
 
             </form>
 
+            <!-- TARJETAS -->
             <div class="row mb-4">
-            
                 <div class="col-md-6">
-                    <div class="card shadow border-0">
+                    <div class="card shadow-sm border-0 rounded-4">
                         <div class="card-body">
                             <h6 class="text-muted">Total Clientes</h6>
-                            <h3 class="fw-bold">{{ total_clientes }}</h3>
+                            <h2 class="fw-bold">{{ total_clientes }}</h2>
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="col-md-6">
-                    <div class="card shadow border-0 bg-primary text-white">
+                    <div class="card shadow-sm border-0 rounded-4 bg-primary text-white">
                         <div class="card-body">
                             <h6>Total Presupuesto</h6>
-                            <h3 class="fw-bold">${{ total_presupuesto }}</h3>
+                            <h2 class="fw-bold">${{ total_presupuesto }}</h2>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- TABLA -->
-            <table class="table table-bordered bg-white">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Proyecto</th>
-                        <th>Presupuesto</th>
-                        <th>Zona</th>
-                        <th>Teléfono</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for c in clientes %}
-                    <tr>
-                        <td>{{ c[1] }}</td>
-                        <td>{{ c[2] }}</td>
-                        <td>{{ c[3] }}</td>
-                        <td>{{ c[4] }}</td>
-                        <td>{{ c[5] }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover bg-white rounded-4 overflow-hidden shadow-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Proyecto</th>
+                            <th>Presupuesto</th>
+                            <th>Zona</th>
+                            <th>Teléfono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cliente in clientes %}
+                        <tr>
+                            <td>{{ cliente[0] }}</td>
+                            <td>{{ cliente[1] }}</td>
+                            <td>${{ cliente[2] }}</td>
+                            <td>{{ cliente[3] }}</td>
+                            <td>{{ cliente[4] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
         </div>
 
