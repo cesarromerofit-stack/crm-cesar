@@ -67,19 +67,23 @@
 
             </form>
 
-            <!-- TARJETAS -->
             <div class="row mb-4">
+            
                 <div class="col-md-6">
-                    <div class="bg-success text-white p-3 rounded">
-                        <h5>Total Clientes</h5>
-                        <h3>{{ total_clientes }}</h3>
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <h6 class="text-muted">Total Clientes</h6>
+                            <h3 class="fw-bold">{{ total_clientes }}</h3>
+                        </div>
                     </div>
                 </div>
-
+            
                 <div class="col-md-6">
-                    <div class="bg-primary text-white p-3 rounded">
-                        <h5>Total Presupuesto</h5>
-                        <h3>${{ total_presupuesto }}</h3>
+                    <div class="card shadow border-0 bg-primary text-white">
+                        <div class="card-body">
+                            <h6>Total Presupuesto</h6>
+                            <h3 class="fw-bold">${{ total_presupuesto }}</h3>
+                        </div>
                     </div>
                 </div>
             </div>
