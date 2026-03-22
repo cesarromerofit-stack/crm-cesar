@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
+    <meta charset="UTF-8">
     <title>CRM Pro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -11,30 +12,20 @@
     <div class="d-flex">
 
         <!-- SIDEBAR -->
-        <div class="bg-dark text-white p-3" style="width: 250px; min-height: 100vh;">
-            <h4 class="mb-4">CRM Pro</h4>
-
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="/clientes">📊 Dashboard</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="/clientes">👥 Clientes</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="#">💰 Ventas</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="#">⚙️ Configuración</a>
-                </li>
-            </ul>
+        <div class="bg-dark text-white p-3" style="width:200px; min-height:100vh;">
+            <h4>CRM Pro</h4>
+            <hr>
+            <p>Dashboard</p>
+            <p><b>Clientes</b></p>
+            <p>Ventas</p>
+            <p>Configuración</p>
         </div>
 
         <!-- CONTENIDO -->
         <div class="flex-grow-1 p-4">
 
-            <h2 class="fw-bold">Panel de Clientes</h2>
-            <p class="text-muted">Gestiona y convierte tus leads en ventas</p>
+            <h3>Panel de Clientes</h3>
+            <p>Gestiona y convierte tus leads en ventas</p>
 
             <!-- BUSCADOR -->
             <form method="GET" action="/clientes" class="mb-3">
@@ -65,71 +56,57 @@
                     <input class="form-control" name="zona" placeholder="Ej: Punta Cana">
                 </div>
 
-                <div class="mb-2">
+                <div class="mb-3">
                     <label>Teléfono</label>
                     <input class="form-control" name="telefono" placeholder="Ej: 8091234567">
                 </div>
 
-                <button class="btn btn-primary w-100 mt-2">+ Guardar Cliente</button>
+                <button type="submit" class="btn btn-primary w-100">
+                    + Guardar Cliente
+                </button>
+
             </form>
 
             <!-- TARJETAS -->
             <div class="row mb-4">
                 <div class="col-md-6">
-                    <div class="bg-success text-white p-3 rounded shadow-sm">
-                        <h6>Total Clientes</h6>
+                    <div class="bg-success text-white p-3 rounded">
+                        <h5>Total Clientes</h5>
                         <h3>{{ total_clientes }}</h3>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <div class="bg-primary text-white p-3 rounded shadow-sm">
-                        <h6>Total Presupuesto</h6>
+                    <div class="bg-primary text-white p-3 rounded">
+                        <h5>Total Presupuesto</h5>
                         <h3>${{ total_presupuesto }}</h3>
                     </div>
                 </div>
             </div>
 
             <!-- TABLA -->
-            <div class="bg-white p-3 rounded shadow-sm">
-                <table class="table table-hover">
-
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Proyecto</th>
-                            <th>Presupuesto</th>
-                            <th>Zona</th>
-                            <th>Teléfono</th>
-                            <th>Nivel</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {% for cliente in clientes %}
-                        <tr>
-                            <td>{{ cliente[0] }}</td>
-                            <td>{{ cliente[1] }}</td>
-                            <td>${{ cliente[2] }}</td>
-                            <td>{{ cliente[3] }}</td>
-                            <td>{{ cliente[4] }}</td>
-
-                            <td>
-                                <span class="badge bg-danger">Caliente</span>
-                            </td>
-
-                            <td>
-                                <a href="/whatsapp/{{ loop.index0 }}" class="btn btn-success btn-sm">💬</a>
-                                <a href="/editar/{{ loop.index0 }}" class="btn btn-warning btn-sm">✏️</a>
-                                <a href="/eliminar/{{ loop.index0 }}" class="btn btn-danger btn-sm">🗑️</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-
-                </table>
-            </div>
+            <table class="table table-bordered bg-white">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Proyecto</th>
+                        <th>Presupuesto</th>
+                        <th>Zona</th>
+                        <th>Teléfono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in clientes %}
+                    <tr>
+                        <td>{{ c[1] }}</td>
+                        <td>{{ c[2] }}</td>
+                        <td>{{ c[3] }}</td>
+                        <td>{{ c[4] }}</td>
+                        <td>{{ c[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
         </div>
 
