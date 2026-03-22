@@ -88,6 +88,30 @@ def eliminar(indice):
 
 @app.route('/whatsapp/<int:indice>')
 def whatsapp(indice):
+    # tu código aquí
+   return redirect('/clientes')
+
+
+@app.route('/guardar', methods=['POST'])
+def guardar():
+    nombre = request.form['nombre']
+    proyecto = request.form['proyecto']
+    presupuesto = request.form['presupuesto']
+    zona = request.form['zona']
+    telefono = request.form['telefono']
+
+    conn = sqlite3.connect("clientes.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO clientes (nombre, proyecto, presupuesto, zona, telefono)
+    VALUES (?, ?, ?, ?, ?)
+    """, (nombre, proyecto, presupuesto, zona, telefono))
+
+    conn.commit()
+    conn.close()
+
+    return redirect('/clientes')
     cliente = clientes[indice]
 
     nombre = cliente[0]
@@ -106,5 +130,6 @@ def whatsapp(indice):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
     
     
