@@ -79,7 +79,7 @@ def guardar():
 # 🔹 INICIO
 @app.route('/')
 def inicio():
-    return redirect('/clientes')
+    return render_template('index.html')
 
 
 # 🔹 RUN
