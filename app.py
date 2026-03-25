@@ -23,6 +23,7 @@ def ver_clientes():
     )
     """)
 
+
     # Filtrar o traer todos
     if zona_filtro:
         cursor.execute("SELECT * FROM clientes WHERE zona LIKE ?", ('%' + zona_filtro + '%',))
@@ -81,6 +82,18 @@ def guardar():
 def inicio():
     return render_template('index.html')
 
+# 🔹 NUEVA VISTA
+@app.route('/propiedad/<int:id>')
+def propiedad(id):
+    conn = sqlite3.connect("clientes.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM clientes WHERE id = ?", (id,))
+    cliente = cursor.fetchone()
+
+    conn.close()
+
+    return render_template("propiedad.html", cliente=cliente)
 
 # 🔹 RUN
 if __name__ == '__main__':
