@@ -89,10 +89,16 @@
                                 <td>{{ c[3] }}</td>
                                 <td>{{ c[4] }}</td>
                                 <td>{{ c[5] }}</td>
+
                                 <td>
                                     <a href="/propiedad/{{ c[0] }}" class="btn btn-sm btn-primary">
                                         Ver
                                     </a>
+                                
+                                <a href="https://api.whatsapp.com/send?phone={{ c[5] }}&text=Hola%20{{ c[1] }}%2C%20te%20contacto%20por%20tu%20interes%20en%20propiedades"
+                                    class="btn btn-sm btn-success mt-1" target="_blank">
+                                    WhatsApp
+                                </a>
                                 </td>
                             </tr>
                             {% endfor %}

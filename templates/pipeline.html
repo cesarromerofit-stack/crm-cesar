@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pipeline CRM</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .pipeline {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+
+        .column {
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            width: 250px;
+            min-height: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .column h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: #f0f3ff;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: grab;
+        }
+
+        .card strong {
+            display: block;
+        }
+
+        .actions {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            font-size: 12px;
+            padding: 5px 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .next {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .prev {
+            background: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📊 Pipeline de Ventas</h1>
+
+    <div class="pipeline" id="pipeline"></div>
+
+    <script>
+        const estados = ["Nuevo", "Contactado", "Interesado", "Negociación", "Cerrado"];
+
+        let clientes = [
+            { id: 1, nombre: "Juan", estado: "Nuevo" },
+            { id: 2, nombre: "Pedro", estado: "Contactado" },
+            { id: 3, nombre: "Ana", estado: "Interesado" },
+            { id: 4, nombre: "Luis", estado: "Negociación" },
+            { id: 5, nombre: "Maria", estado: "Cerrado" }
+        ];
+
+        function renderPipeline() {
+            const container = document.getElementById("pipeline");
+            container.innerHTML = "";
+
+            estados.forEach((estado, index) => {
+                const col = document.createElement("div");
+                col.className = "column";
+
+                const title = document.createElement("h2");
+                title.innerText = estado;
+                col.appendChild(title);
+
+                clientes
+                    .filter(c => c.estado === estado)
+                    .forEach(cliente => {
+                        const card = document.createElement("div");
+                        card.className = "card";
+
+                        card.innerHTML = `
+          <strong>${cliente.nombre}</strong>
+          <div class="actions">
+            <button class="btn prev" onclick="mover(${cliente.id}, -1)">⬅</button>
+            <button class="btn next" onclick="mover(${cliente.id}, 1)">➡</button>
+          </div>
+        `;
+
+                        col.appendChild(card);
+                    });
+
+                container.appendChild(col);
+            });
+        }
+
+        function mover(id, direccion) {
+            const cliente = clientes.find(c => c.id === id);
+            let index = estados.indexOf(cliente.estado);
+
+            index += direccion;
+
+            if (index >= 0 && index < estados.length) {
+                cliente.estado = estados[index];
+            }
+
+            renderPipeline();
+        }
+
+        renderPipeline();
+    </script>
+
+</body>
+
+</html>
